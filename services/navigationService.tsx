@@ -5,7 +5,7 @@ import { DeviceEventEmitter } from 'react-native';
 export const isMountedRef = React.createRef();
 export const navigationRef = React.createRef();
 
-export function navigate(name: any, params: any) {
+export function navigate(name: any, params: any = {}) {
     if (isMountedRef.current && navigationRef.current) {
         // Perform navigation if the app has mounted
         navigationRef.current.navigate(name, params);

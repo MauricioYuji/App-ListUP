@@ -1,8 +1,16 @@
 {
   "ExpandedNodes": [
     "",
-    "\\views"
+    "\\components",
+    "\\components\\navigationAuth",
+    "\\constants",
+    "\\views",
+    "\\views\\auth",
+    "\\views\\auth\\forgetpassword",
+    "\\views\\auth\\register",
+    "\\views\\pages",
+    "\\views\\pages\\feed"
   ],
-  "SelectedNode": "\\README.md",
+  "SelectedNode": "\\app.json",
   "PreviewInSolutionExplorer": false
 }

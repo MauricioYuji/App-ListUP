@@ -7,11 +7,10 @@ import { createStackNavigator, TransitionSpecs, HeaderStyleInterpolators } from 
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import Layout from '../../constants/Layout';
 import Icon from '../../components/icon';
-import Screens from '../../constants/Screens';
+import { Screens } from '../../constants/Screens';
 
 
 
-//const Pages = createStackNavigator();
 const Pages = createMaterialTopTabNavigator();
 
 const MyTransition = {
@@ -58,7 +57,7 @@ const MyTransition = {
 }
 
 
-function MyStack() {
+function MyPages() {
     return (
         <Pages.Navigator
             screenOptions={{
@@ -89,12 +88,17 @@ export default class navigationBar extends Component {
         super(props);
         this.state = {
             currentRoute: "Feed",
+            showNavBar: true,
         };
     }
     componentDidMount() {
 
         DeviceEventEmitter.addListener('currentRoute', (data) => {
             this.setState({ currentRoute: data }, () => {
+            });
+        });
+        DeviceEventEmitter.addListener('showNavBar', (data) => {
+            this.setState({ showNavBar: data }, () => {
             });
         });
     }
@@ -113,13 +117,15 @@ export default class navigationBar extends Component {
 
     createIcon(route: string, params: any, name: string) {
         return (
-            <TouchableHighlight underlayColor="transparent" onPress={() => navigate(route, params)}>
-                <Icon
-                    size={32}
-                    name={name}
-                    type='FontAwesome'
-                    focused={this.state.currentRoute == route}
-                />
+            <TouchableHighlight underlayColor="transparent" style={styles.icon} onPress={() => navigate(route, params)}>
+                <View style={styles.icon}>
+                    <Icon
+                        size={32}
+                        name={name}
+                        type='FontAwesome'
+                        focused={this.state.currentRoute == route}
+                    />
+                </View>
             </TouchableHighlight>
         );
     }
@@ -177,78 +183,79 @@ export default class navigationBar extends Component {
         const screenRight = Screens.slice(Screens.length / 2, Screens.length);
         return (
             <View style={styles.container}>
-                <MyStack />
-
-                <View style={styles.navcontainer}>
-                    <View style={styles.gridmenu} >
-                        {screenLeft.map((data, index) =>
-                            <View style={styles.icon} key={index}>
-                                {this.createIcon(data.route, data.params, data.icon)}
-                            </View>
-                        )}
-                        <View style={styles.menuButtonMock}></View>
-                        {screenRight.map((data, index) =>
-                            <View style={styles.icon} key={index}>
-                                {this.createIcon(data.route, data.params, data.icon)}
-                            </View>
-                        )}
-                    </View>
-
-                    <TouchableHighlight
-                        style={styles.menuButtonArea}
-                        underlayColor="transparent"
-                        onPress={this.toggleView}>
-                        <View>
-                            <Animated.View style={[styles.menuButton, {
-                                opacity,
-                                transform: [
-                                    { rotate: rotation }
-                                ]
-                            }]}>
-                                <Image source={require('../../assets/images/icon.png')} resizeMode="contain" style={styles.iconButton} />
-                            </Animated.View>
-                            <Animated.View style={[styles.closeIcon, {
-                                opacity: invertedopacity,
-                                transform: [
-                                    { rotate: invertedrotation }
-                                ]
-                            }]}><Text style={styles.closeBt}>+</Text></Animated.View>
-
+                <MyPages />
+                {this.state.showNavBar &&
+                    <View style={styles.navcontainer}>
+                        <View style={styles.gridmenu} >
+                            {screenLeft.map((data, index) =>
+                                <View style={styles.icon} key={index}>
+                                    {this.createIcon(data.route, data.params, data.icon)}
+                                </View>
+                            )}
+                            <View style={styles.menuButtonMock}></View>
+                            {screenRight.map((data, index) =>
+                                <View style={styles.icon} key={index}>
+                                    {this.createIcon(data.route, data.params, data.icon)}
+                                </View>
+                            )}
                         </View>
-                    </TouchableHighlight>
-                    <Animated.View style={[styles.menu, {
-                        width,
-                        height,
-                        borderRadius: radius,
-                        bottom: menuPos
-                    }]}
-                        onStartShouldSetResponder={evt => {
-                            evt.persist();
-                            console.log('Tapped outside');
-                        }}
-                    >
-                        <ScrollView style={styles.menuGrid} horizontal={true} showsHorizontalScrollIndicator={false}>
-                            {this.createMenuIcon('My Games', 'gamepad-variant', 'MaterialCommunityIcons', () => navigate('Feed', {}))}
-                            {this.createMenuIcon('Fav List', 'format-list-bulleted-type', 'MaterialCommunityIcons', () => navigate('Games', {}))}
-                            {this.createMenuIcon('Criar lista', 'playlist-add', 'MaterialIcons', () => navigate('Games', {}))}
-                            {this.createMenuIcon('Criar lista', 'playlist-add', 'MaterialIcons', () => navigate('Games', {}))}
-                            {this.createMenuIcon('Criar lista', 'playlist-add', 'MaterialIcons', () => navigate('Games', {}))}
-                            {this.createMenuIcon('Criar lista', 'playlist-add', 'MaterialIcons', () => navigate('Games', {}))}
-                            {this.createMenuIcon('Criar lista', 'playlist-add', 'MaterialIcons', () => navigate('Games', {}))}
-                            {this.createMenuIcon('Criar lista', 'playlist-add', 'MaterialIcons', () => navigate('Games', {}))}
-                        </ScrollView>
-                        <ScrollView style={styles.menuGrid} horizontal={true} showsHorizontalScrollIndicator={false}>
-                            {this.createMenuIcon('Random Game', 'dice-5', 'MaterialCommunityIcons', () => navigate('Tutorial', {}))}
-                            {this.createMenuIcon('Game Reviews', 'star', 'FontAwesome', () => navigate('Tutorial', {}))}
-                            {this.createMenuIcon('Game Match', 'cards-outline', 'MaterialCommunityIcons', () => navigate('Tutorial', {}))}
-                        </ScrollView>
-                        <ScrollView style={styles.menuGrid} horizontal={true} showsHorizontalScrollIndicator={false}>
-                            {this.createMenuIcon('Tutorial', 'book', 'Octicons', () => navigate('Tutorial', {}))}
-                            {this.createMenuIcon('Configurações', 'gear', 'FontAwesome', () => navigate('Configuracoes', {}))}
-                            {this.createMenuIcon('Logout', 'logout', 'MaterialCommunityIcons', () => navigate('logoff', {}))}
-                        </ScrollView>
-                    </Animated.View>
-                </View>
+
+                        <TouchableHighlight
+                            style={styles.menuButtonArea}
+                            underlayColor="transparent"
+                            onPress={this.toggleView}>
+                            <View>
+                                <Animated.View style={[styles.menuButton, {
+                                    opacity,
+                                    transform: [
+                                        { rotate: rotation }
+                                    ]
+                                }]}>
+                                    <Image source={require('../../assets/images/icon.png')} resizeMode="contain" style={styles.iconButton} />
+                                </Animated.View>
+                                <Animated.View style={[styles.closeIcon, {
+                                    opacity: invertedopacity,
+                                    transform: [
+                                        { rotate: invertedrotation }
+                                    ]
+                                }]}><Text style={styles.closeBt}>+</Text></Animated.View>
+
+                            </View>
+                        </TouchableHighlight>
+                        <Animated.View style={[styles.menu, {
+                            width,
+                            height,
+                            borderRadius: radius,
+                            bottom: menuPos
+                        }]}
+                            onStartShouldSetResponder={evt => {
+                                evt.persist();
+                                console.log('Tapped outside');
+                            }}
+                        >
+                            <ScrollView style={styles.menuGrid} horizontal={true} showsHorizontalScrollIndicator={false}>
+                                {this.createMenuIcon('My Games', 'gamepad-variant', 'MaterialCommunityIcons', () => navigate('Feed', {}))}
+                                {this.createMenuIcon('Fav List', 'format-list-bulleted-type', 'MaterialCommunityIcons', () => navigate('Games', {}))}
+                                {this.createMenuIcon('Criar lista', 'playlist-add', 'MaterialIcons', () => navigate('Games', {}))}
+                                {this.createMenuIcon('Criar lista', 'playlist-add', 'MaterialIcons', () => navigate('Games', {}))}
+                                {this.createMenuIcon('Criar lista', 'playlist-add', 'MaterialIcons', () => navigate('Games', {}))}
+                                {this.createMenuIcon('Criar lista', 'playlist-add', 'MaterialIcons', () => navigate('Games', {}))}
+                                {this.createMenuIcon('Criar lista', 'playlist-add', 'MaterialIcons', () => navigate('Games', {}))}
+                                {this.createMenuIcon('Criar lista', 'playlist-add', 'MaterialIcons', () => navigate('Games', {}))}
+                            </ScrollView>
+                            <ScrollView style={styles.menuGrid} horizontal={true} showsHorizontalScrollIndicator={false}>
+                                {this.createMenuIcon('Random Game', 'dice-5', 'MaterialCommunityIcons', () => navigate('Tutorial', {}))}
+                                {this.createMenuIcon('Game Reviews', 'star', 'FontAwesome', () => navigate('Tutorial', {}))}
+                                {this.createMenuIcon('Game Match', 'cards-outline', 'MaterialCommunityIcons', () => navigate('Tutorial', {}))}
+                            </ScrollView>
+                            <ScrollView style={styles.menuGrid} horizontal={true} showsHorizontalScrollIndicator={false}>
+                                {this.createMenuIcon('Tutorial', 'book', 'Octicons', () => navigate('Tutorial', {}))}
+                                {this.createMenuIcon('Configurações', 'gear', 'FontAwesome', () => navigate('Configuracoes', {}))}
+                                {this.createMenuIcon('Logout', 'logout', 'MaterialCommunityIcons', () => navigate('logoff', {}))}
+                            </ScrollView>
+                        </Animated.View>
+                    </View>
+                }
             </View>
         );
     }

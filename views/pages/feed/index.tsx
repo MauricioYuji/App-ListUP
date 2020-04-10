@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Button } from 'react-native';
+import { Text, View, Button, DeviceEventEmitter } from 'react-native';
 import styles from './feed.style';
 
 export default class Feed extends Component {

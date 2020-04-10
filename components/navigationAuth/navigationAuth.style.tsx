@@ -22,6 +22,7 @@ export default StyleSheet.create({
         alignItems: 'stretch',
         alignContent: 'center',
         justifyContent: 'space-around',
+        paddingVertical: 10
     },
     iconButton: {
         width: '100%',

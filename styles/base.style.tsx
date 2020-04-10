@@ -13,6 +13,14 @@ export default StyleSheet.create({
         justifyContent: 'center',
 
     },
+    backgroundModal: {
+        backgroundColor: 'rgba(0, 0, 0, 0.9)',
+        flex: 1,
+        textAlign: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex: 1000
+    },
     backgroundBanner: {
         width: width,
         height: height,

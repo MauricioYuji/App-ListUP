@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Text, View, Button } from 'react-native';
-import styles from './feed.style';
+import { Text, View, Button, DeviceEventEmitter } from 'react-native';
+import styles from './login.style';
+import { navigate} from '../../../services/navigationService'
 
 export default class Login extends Component {
     constructor(props) {
@@ -12,6 +13,20 @@ export default class Login extends Component {
         return (
             <View style={styles.container}>
                 <Text style={styles.text}>Login</Text>
+                <Button
+                    onPress={() => navigate('Register')}
+                    title="Register"
+                />
+                <Button
+                    onPress={() => navigate('ForgetPassword')}
+                    title="ForgetPassword"
+                />
+                <Button
+                    onPress={() => {
+                        DeviceEventEmitter.emit('setUser', 'LOGIN');
+                    }}
+                    title="Login"
+                />
             </View>
         );
     }

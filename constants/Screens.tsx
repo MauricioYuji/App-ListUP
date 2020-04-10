@@ -1,10 +1,13 @@
 
-import Feed from '../views/feed';
-import Games from '../views/games';
-import Groups from '../views/groups';
-import Profile from '../views/profile';
+import Feed from '../views/pages/feed';
+import Games from '../views/pages/games';
+import Groups from '../views/pages/groups';
+import Profile from '../views/pages/profile';
+import Login from '../views/auth/login';
+import Register from '../views/auth/register';
+import ForgetPassword from '../views/auth/forgetpassword';
 
-export default [
+export const Screens = [
     {
         component: Feed,
         route: 'Feed',
@@ -34,4 +37,23 @@ export default [
         icon: 'user',
         tabBar: true
     }
+];
+
+
+export const AuthScreens = [
+    {
+        component: Login,
+        route: 'Login',
+        params: {}
+    },
+    {
+        component: Register,
+        route: 'Register',
+        params: {}
+    },
+    {
+        component: ForgetPassword,
+        route: 'ForgetPassword',
+        params: {}
+    },
 ];
