@@ -10,7 +10,7 @@ export default class Icon extends React.Component {
             return (
                 <Ionicons
                     name={this.props.name}
-                    size={26}
+                    size={this.props.size}
                     style={[{ marginBottom: -3 }, this.props.style]}
                     color={this.props.focused ? Colors.tabIconSelected : Colors.tabIconDefault}
                 />
@@ -19,7 +19,7 @@ export default class Icon extends React.Component {
             return (
                 <MaterialIcons
                     name={this.props.name}
-                    size={26}
+                    size={this.props.size}
                     style={[{ marginBottom: -3 }, this.props.style]}
                     color={this.props.focused ? Colors.tabIconSelected : Colors.tabIconDefault}
                 />
@@ -28,7 +28,7 @@ export default class Icon extends React.Component {
             return (
                 <MaterialCommunityIcons
                     name={this.props.name}
-                    size={26}
+                    size={this.props.size}
                     style={[{ marginBottom: -3 }, this.props.style]}
                     color={this.props.focused ? Colors.tabIconSelected : Colors.tabIconDefault}
                 />
@@ -37,7 +37,7 @@ export default class Icon extends React.Component {
             return (
                 <FontAwesome
                     name={this.props.name}
-                    size={26}
+                    size={this.props.size}
                     style={[{ marginBottom: -3 }, this.props.style]}
                     color={this.props.focused ? Colors.tabIconSelected : Colors.tabIconDefault}
                 />
@@ -46,7 +46,7 @@ export default class Icon extends React.Component {
             return (
                 <FontAwesome
                     name={this.props.name}
-                    size={26}
+                    size={this.props.size}
                     style={[{ marginBottom: -3 }, this.props.style]}
                     color={this.props.focused ? Colors.tabIconSelected : Colors.tabIconDefault}
                 />

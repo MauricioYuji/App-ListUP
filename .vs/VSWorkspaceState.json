@@ -2,15 +2,13 @@
   "ExpandedNodes": [
     "",
     "\\components",
-    "\\components\\navigationAuth",
     "\\constants",
+    "\\services",
     "\\views",
     "\\views\\auth",
-    "\\views\\auth\\forgetpassword",
-    "\\views\\auth\\register",
-    "\\views\\pages",
-    "\\views\\pages\\feed"
+    "\\views\\auth\\login",
+    "\\views\\auth\\register"
   ],
-  "SelectedNode": "\\app.json",
+  "SelectedNode": "\\services\\baseService.tsx",
   "PreviewInSolutionExplorer": false
 }

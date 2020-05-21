@@ -8,6 +8,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { navigationRef, isMountedRef, navigationChange, navigate } from './services/navigationService';
 import { AppLoading, SplashScreen } from 'expo';
 import { Asset } from 'expo-asset';
+import * as Font from 'expo-font';
 
 
 
@@ -15,11 +16,10 @@ function App(props: any) {
     const [isLoadingComplete, setLoadingComplete] = useState(false);
     const [isAppReady, setAppReady] = useState(false);
     const [isloading, setloading] = useState(false);
-    const [isAuth, setAuth] = useState(false);
+    const [isAuth, setAuth] = useState(null);
     React.useEffect(() => {
         isMountedRef.current = true;
         DeviceEventEmitter.addListener('setUser', (data) => {
-            console.log("data: ", data);
             setAuth(data);
         });
         DeviceEventEmitter.addListener('loading', (data) => {
@@ -37,22 +37,10 @@ function App(props: any) {
                 startAsync={loadResourcesAsync}
                 onError={handleLoadingError}
                 onFinish={() => handleFinishLoading(setLoadingComplete)}
-                autoHideSplash={false}
+                autoHideSplash={true}
             />
         );
 
-    }
-    if (!isAppReady) {
-        return (
-            <View style={{ flex: 1 }}>
-                <Image source={require('./assets/images/background.png')} resizeMode={'repeat'} style={[styles.backgroundBanner]} />
-                <Image
-                    source={require('./assets/images/splash.png')}
-                    onLoadEnd={_cacheResourcesAsync(setAppReady)}
-                    fadeDuration={0}
-                />
-            </View>
-        );
     }
 
     return (
@@ -61,7 +49,7 @@ function App(props: any) {
             <StatusBar backgroundColor="#000" barStyle="light-content" />
             <View style={styles.container}>
                 <Image source={require('./assets/images/background.png')} resizeMode={'repeat'} style={[styles.backgroundBanner]} />
-                {isAuth
+                {isAuth != null
                     ? <NavigationBar />
                     : <NavigationAuth />
                 }
@@ -85,24 +73,41 @@ function App(props: any) {
 
 }
 
-async function _cacheResourcesAsync(setAppReady: any) {
+async function _cacheResourcesAsync<Function>(setAppReady: any) {
     SplashScreen.hide();
+};
+async function loadResourcesAsync() {
     const images = [
         require('./assets/images/icon.png'),
+        require('./assets/images/logo-icon.png'),
     ];
+    const fonts = {
+        'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
+        'SourceSansPro-Black': require('./assets/fonts/SourceSansPro-Black.ttf'),
+        'SourceSansPro-BlackItalic': require('./assets/fonts/SourceSansPro-BlackItalic.ttf'),
+        'SourceSansPro-Bold': require('./assets/fonts/SourceSansPro-Bold.ttf'),
+        'SourceSansPro-BoldItalic': require('./assets/fonts/SourceSansPro-BoldItalic.ttf'),
+        'SourceSansPro-ExtraLight': require('./assets/fonts/SourceSansPro-ExtraLight.ttf'),
+        'SourceSansPro-ExtraLightItalic': require('./assets/fonts/SourceSansPro-ExtraLightItalic.ttf'),
+        'SourceSansPro-Italic': require('./assets/fonts/SourceSansPro-Italic.ttf'),
+        'SourceSansPro-Light': require('./assets/fonts/SourceSansPro-Light.ttf'),
+        'SourceSansPro-LightItalic': require('./assets/fonts/SourceSansPro-LightItalic.ttf'),
+        'SourceSansPro-Regular': require('./assets/fonts/SourceSansPro-Regular.ttf'),
+        'SourceSansPro-SemiBold': require('./assets/fonts/SourceSansPro-SemiBold.ttf'),
+        'SourceSansPro-SemiBoldItalic': require('./assets/fonts/SourceSansPro-SemiBoldItalic.ttf')
+    };
 
     const cacheImages = images.map(image => {
         return Asset.fromModule(image).downloadAsync();
     });
-
+    await Font.loadAsync(fonts);
     await Promise.all(cacheImages);
-    setAppReady(true);
-};
-async function loadResourcesAsync() {
+    //setAppReady(true);
 }
 function handleFinishLoading(setLoadingComplete: any) {
-    
-    setTimeout(function () { setLoadingComplete(true) }, 10000)
+    console.log("LOAD COMPLETE");
+    setLoadingComplete(true)
+    //setTimeout(function () { setLoadingComplete(true) }, 10000)
 }
 function handleLoadingError(error: Error) {
     // In this case, you might want to report the error to your error reporting

@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Button, Image, Animated, TouchableHighlight, To
 import styles from './navigationBar.style';
 import { Ionicons, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 import { navigate } from '../../services/navigationService';
+import { Logout } from '../../services/authService';
 import { createStackNavigator, TransitionSpecs, HeaderStyleInterpolators } from '@react-navigation/stack';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import Layout from '../../constants/Layout';
@@ -100,6 +101,11 @@ export default class navigationBar extends Component {
         DeviceEventEmitter.addListener('showNavBar', (data) => {
             this.setState({ showNavBar: data }, () => {
             });
+        });
+        DeviceEventEmitter.addListener('hideNav', (data) => {
+            if (this.mode._value === 1 && data) {
+                this.toggleView();
+            }
         });
     }
 
@@ -251,7 +257,7 @@ export default class navigationBar extends Component {
                             <ScrollView style={styles.menuGrid} horizontal={true} showsHorizontalScrollIndicator={false}>
                                 {this.createMenuIcon('Tutorial', 'book', 'Octicons', () => navigate('Tutorial', {}))}
                                 {this.createMenuIcon('Configurações', 'gear', 'FontAwesome', () => navigate('Configuracoes', {}))}
-                                {this.createMenuIcon('Logout', 'logout', 'MaterialCommunityIcons', () => navigate('logoff', {}))}
+                                {this.createMenuIcon('Logout', 'logout', 'MaterialCommunityIcons', () => Logout())}
                             </ScrollView>
                         </Animated.View>
                     </View>
