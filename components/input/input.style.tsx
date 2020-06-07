@@ -31,7 +31,7 @@ export default StyleSheet.create({
         paddingVertical: 5
     },
     erroText: {
-        color: '#F00',
+        color: '#D00',
     },
     inputText: {
         color: '#FFF',

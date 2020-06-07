@@ -49,5 +49,12 @@ export default StyleSheet.create({
         textDecorationLine: 'underline',
         color: '#FFF'
     },
+    erroBox: {
+        padding: 5,
+        textAlign: "center"
+    },
+    erroBoxText: {
+        color: '#D00'
+    }
 });
 

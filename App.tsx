@@ -9,6 +9,7 @@ import { navigationRef, isMountedRef, navigationChange, navigate } from './servi
 import { AppLoading, SplashScreen } from 'expo';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
+import { AsyncStorage } from 'react-native'
 
 
 
@@ -18,9 +19,21 @@ function App(props: any) {
     const [isloading, setloading] = useState(false);
     const [isAuth, setAuth] = useState(null);
     React.useEffect(() => {
+        AsyncStorage.getItem('USER', (err, result) => {
+            console.log(result);
+            if (result != null) {
+                setAuth(JSON.parse(result));
+            }
+        });
+
         isMountedRef.current = true;
         DeviceEventEmitter.addListener('setUser', (data) => {
+            console.log("data: ", data);
             setAuth(data);
+            AsyncStorage.setItem(
+                'USER',
+                JSON.stringify(data)
+            );
         });
         DeviceEventEmitter.addListener('loading', (data) => {
             setloading(data);
