@@ -10,6 +10,7 @@ export function navigate(name: any, params: any = {}) {
     if (isMountedRef.current && navigationRef.current) {
         // Perform navigation if the app has mounted
         navigationRef.current.navigate(name, params);
+        navigationRef.current.setParams(params)
         DeviceEventEmitter.emit('currentRoute', name);
         DeviceEventEmitter.emit('hideNav', true);
     } else {

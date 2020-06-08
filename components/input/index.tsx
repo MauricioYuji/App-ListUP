@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+﻿import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Text, TouchableOpacity, TextInput, View } from 'react-native';
 import styles from './input.style';
@@ -51,13 +51,40 @@ class CustomInput extends Component {
                         <Text style={styles.erroText}>Preencha o campo {this.props.placeholder}</Text>
                     </View>
                 )
+            } else if (this.props.type === "email" && !this.validateEmail(this.props.value)) {
+                return (
+                    <View style={styles.erroBox}>
+                        <Text style={styles.erroText}>Preencha um email válido</Text>
+                    </View>
+                )
             }
         }
+    }
+    validateEmail(email) {
+        const reg = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+
+        return reg.test(String(email).toLowerCase());
     }
     render = () => {
         let { type, placeholder, submited, changeValue, value, limit } = this.props;
 
         if (type === "email") {
+            return (
+                <View style={styles.inputArea}>
+                    <View style={submited && (value === '' || !this.validateEmail(value)) ? styles.inputerror : styles.input}>
+                        <TextInput
+                            style={styles.inputText}
+                            autoCapitalize="none"
+                            placeholder={placeholder}
+                            onChangeText={text => changeValue(text)}
+                            value={value}
+                            maxLength={limit}
+                        />
+                    </View>
+                    {this.showError()}
+                </View>
+            );
+        } else if (type === "text") {
             return (
                 <View style={styles.inputArea}>
                     <View style={submited && value === '' ? styles.inputerror : styles.input}>

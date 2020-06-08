@@ -16,3 +16,33 @@ export function logIn(email: string, password: string) {
     return post("/login/", user);
 
 }
+export function signIn(email: string, fullname: string, password: string) {
+
+    const user = {
+        password: password,
+        fullname: fullname,
+        email: email
+    };
+    //console.log("POST LOGIN");
+    return post("/user/add", user);
+
+}
+
+export function confirmEmail(email: string) {
+
+    const user = {
+        email: email
+    };
+    //console.log("POST LOGIN");
+    return post("/sendconfirm/", user);
+
+}
+export function forgetpassword(email: string) {
+
+    const user = {
+        email: email
+    };
+    //console.log("POST LOGIN");
+    return post("/resetpassword/", user);
+
+}

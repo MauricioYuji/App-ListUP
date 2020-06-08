@@ -28,9 +28,8 @@ export async function logInWithFacebook(register: boolean) {
                 isfacebook: true
             };
 
-            console.log("user: ", user);
+            //console.log("user: ", user);
             if (register) {
-
                 return post("/signinwithfacebook/", user);
             } else {
 

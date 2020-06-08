@@ -49,9 +49,16 @@ export default StyleSheet.create({
         textDecorationLine: 'underline',
         color: '#FFF'
     },
-    erroBox: {
+    feedbackMsg: {
         padding: 5,
         textAlign: "center"
+    },
+    feedbackBoxText: {
+        color: '#FFF'
+    },
+    linkText: {
+        color: '#FFF',
+        textDecorationLine: "underline"
     },
     erroBoxText: {
         color: '#D00'

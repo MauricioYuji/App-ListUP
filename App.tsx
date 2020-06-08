@@ -20,7 +20,7 @@ function App(props: any) {
     const [isAuth, setAuth] = useState(null);
     React.useEffect(() => {
         AsyncStorage.getItem('USER', (err, result) => {
-            console.log(result);
+            //console.log(result);
             if (result != null) {
                 setAuth(JSON.parse(result));
             }
@@ -28,7 +28,7 @@ function App(props: any) {
 
         isMountedRef.current = true;
         DeviceEventEmitter.addListener('setUser', (data) => {
-            console.log("data: ", data);
+            //console.log("data: ", data);
             setAuth(data);
             AsyncStorage.setItem(
                 'USER',

@@ -6,6 +6,7 @@ import Profile from '../views/pages/profile';
 import Login from '../views/auth/login';
 import Register from '../views/auth/register';
 import ForgetPassword from '../views/auth/forgetpassword';
+import ConfirmEmail from '../views/auth/confirmemail';
 
 export const Screens = [
     {
@@ -54,6 +55,11 @@ export const AuthScreens = [
     {
         component: ForgetPassword,
         route: 'ForgetPassword',
+        params: {}
+    },
+    {
+        component: ConfirmEmail,
+        route: 'ConfirmEmail',
         params: {}
     },
 ];

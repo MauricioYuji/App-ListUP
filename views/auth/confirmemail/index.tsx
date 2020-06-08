@@ -1,12 +1,12 @@
 ﻿import React, { Component } from 'react';
 import { Text, View, Button, Image, TextInput, TouchableOpacity, ActivityIndicator, ScrollView } from 'react-native';
-import styles from './forgetpassword.style';
+import styles from './confirmemail.style';
 import { navigate } from '~/services/navigationService';
 import CustomButton from '~/components/button';
 import CustomInput from '~/components/input';
-import { forgetpassword } from '~/services/authService';
+import { confirmEmail } from '~/services/authService';
 
-export default class ForgetPassword extends Component {
+export default class ConfirmEmail extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -21,7 +21,7 @@ export default class ForgetPassword extends Component {
         const { email } = this.state;
 
         this.setState({ loading: 'enviar' });
-        forgetpassword(email).then(p => {
+        confirmEmail(email).then(p => {
             if (p.success) {
                 this.props.navigation.navigate('Login', { feedback: p.message });
             } else {
@@ -50,7 +50,7 @@ export default class ForgetPassword extends Component {
             <ScrollView>
                 <View style={styles.container}>
                     <Image source={require('~/assets/images/logo-icon.png')} style={styles.logo} />
-                    <Text style={styles.defaultTitle}>Esqueceu a senha?</Text>
+                    <Text style={styles.defaultTitle}>Não confirmou sua conta?</Text>
                     <Text style={styles.defaultText}>Informe o seu email de cadastro para o reenvio de confirmação de email</Text>
                     <CustomInput
                         type={'email'}
