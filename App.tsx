@@ -6,7 +6,7 @@ import NavigationAuth from './components/navigationAuth';
 import { NavigationContainer } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { navigationRef, isMountedRef, navigationChange, navigate } from './services/navigationService';
-import { AppLoading, SplashScreen } from 'expo';
+import { AppLoading, SplashScreen, Linking } from 'expo';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
 import { AsyncStorage } from 'react-native'
@@ -18,9 +18,12 @@ function App(props: any) {
     const [isAppReady, setAppReady] = useState(false);
     const [isloading, setloading] = useState(false);
     const [isAuth, setAuth] = useState(null);
+
+
     React.useEffect(() => {
+
+
         AsyncStorage.getItem('USER', (err, result) => {
-            //console.log(result);
             if (result != null) {
                 setAuth(JSON.parse(result));
             }

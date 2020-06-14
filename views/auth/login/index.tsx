@@ -7,17 +7,20 @@ import CustomButton from '~/components/button';
 import { logInWithFacebook } from '~/services/facebookAuth';
 import { logIn } from '~/services/authService';
 
+const initialState = {
+    email: '',
+    password: '',
+    submited: false,
+    loading: '',
+    erroMsg: '',
+    notConfirmed: false
+};
+
 export default class Login extends Component {
-    constructor() {
-        super();
-        this.state = {
-            email: '',
-            password: '',
-            submited: false,
-            loading: '',
-            erroMsg: '',
-            notConfirmed: false
-        };
+    constructor(props) {
+        super(props);
+
+        this.state = initialState;
     }
     componentDidMount() {
         this.load()
@@ -25,7 +28,7 @@ export default class Login extends Component {
     }
 
     load = () => {
-        console.log("RENDERED");
+        this.props.navigation.setParams({ feedback: null })
     }
     login() {
         const _self = this;
@@ -96,10 +99,14 @@ export default class Login extends Component {
         });
     }
     sendEmail() {
-        //var _self = this;
-        //_self.setState({ errorMessage: null, loading: null, emailSend: false });
-        navigate('ConfirmEmail');
+        this.nav('ConfirmEmail');
     }
+
+    nav(route = null, params = null) {
+        this.setState(initialState);
+        navigate(route, params)
+    }
+
     feedbackerrorMessage() {
         if (this.state.erroMsg) {
             return (
@@ -110,17 +117,23 @@ export default class Login extends Component {
         }
     }
     feedbackMessage() {
-        if ((this.props.route.params != undefined && this.props.route.params.feedback != null) || this.state.notConfirmed) {
+        if (this.state.notConfirmed) {
             return (
                 <View style={styles.feedbackMsg}>
                     <Text style={styles.feedbackBoxText}>Esta conta ainda não foi confirmada, caso não tenha recebido o email, <Text onPress={() => this.sendEmail()} style={styles.linkText}>clique aqui</Text> para reenviar o email de confirmação.</Text>
+                </View>
+            );
+        } else if ((this.props.route.params != undefined && this.props.route.params.feedback != null)) {
+            return (
+                <View style={styles.feedbackMsg}>
+                    <Text style={styles.feedbackBoxText}>{this.props.route.params.feedback}</Text>
                 </View>
             );
         }
     }
     render() {
         return (
-            <ScrollView>
+            <ScrollView keyboardShouldPersistTaps='handled'>
                 <View style={styles.container}>
                     <Image source={require('~/assets/images/logo-icon.png')} style={styles.logo} />
                     <CustomInput
@@ -140,7 +153,7 @@ export default class Login extends Component {
                     />
                     <View style={styles.forgottenPassword}>
                         <TouchableOpacity onPress={() => {
-                            navigate('ForgetPassword');
+                            this.nav('ForgetPassword');
                         }}>
                             <Text style={styles.forgottenPasswordbuttonText}>Esqueceu a senha?</Text>
                         </TouchableOpacity>
@@ -157,7 +170,7 @@ export default class Login extends Component {
                         <CustomButton
                             content={'Criar uma conta'}
                             type={'default'}
-                            event={() => { navigate('Register') }}
+                            event={() => { this.nav('Register') }}
                         />
                     </View>
                     <View style={styles.divider}>

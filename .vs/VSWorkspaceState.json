@@ -8,6 +8,5 @@
     "\\views\\auth\\confirmemail",
     "\\views\\auth\\forgetpassword"
   ],
-  "SelectedNode": "\\App.tsx",
   "PreviewInSolutionExplorer": false
 }

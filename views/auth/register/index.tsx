@@ -121,8 +121,8 @@ export default class Register extends Component {
 
     render() {
         return (
-            <ScrollView>
-                <View style={styles.container} keyboardShouldPersistTaps='handled'>
+            <ScrollView keyboardShouldPersistTaps='handled'>
+                <View style={styles.container}>
                     <Image source={require('~/assets/images/logo-icon.png')} style={styles.logo} />
                     <CustomInput
                         type={'text'}

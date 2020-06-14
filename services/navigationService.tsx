@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { DeviceEventEmitter } from 'react-native';
+import { CommonActions } from '@react-navigation/native';
+
 
 
 export const isMountedRef = React.createRef();
@@ -7,6 +9,7 @@ export const navigationRef = React.createRef();
 export let navParams = null;
 
 export function navigate(name: any, params: any = {}) {
+    console.log();
     if (isMountedRef.current && navigationRef.current) {
         // Perform navigation if the app has mounted
         navigationRef.current.navigate(name, params);
@@ -19,10 +22,16 @@ export function navigate(name: any, params: any = {}) {
     }
 }
 export function navigationChange(e) {
+
     if (e.history != undefined) {
-        let current = e.history.slice(-1).pop();
-        let obj = e.routes.find((p: { key: any; }) => p.key == current.key);
-        let rota = obj.name;
+        const current = e.history.slice(-1).pop();
+        const index = e.routes.findIndex((p: { key: any; }) => p.key == current.key);
+        const obj = e.routes.find((p: { key: any; }) => p.key == current.key);
+        const rota = obj.name;
+
         DeviceEventEmitter.emit('currentRoute', rota);
+
     }
+
+
 }

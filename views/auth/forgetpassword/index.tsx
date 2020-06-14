@@ -47,7 +47,7 @@ export default class ForgetPassword extends Component {
     }
     render() {
         return (
-            <ScrollView>
+            <ScrollView keyboardShouldPersistTaps='handled'>
                 <View style={styles.container}>
                     <Image source={require('~/assets/images/logo-icon.png')} style={styles.logo} />
                     <Text style={styles.defaultTitle}>Esqueceu a senha?</Text>

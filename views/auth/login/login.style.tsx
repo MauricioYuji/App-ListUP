@@ -51,10 +51,12 @@ export default StyleSheet.create({
     },
     feedbackMsg: {
         padding: 5,
-        textAlign: "center"
+        textAlign: "left",
+        width: '100%',
     },
     feedbackBoxText: {
-        color: '#FFF'
+        color: '#FFF',
+        textAlign: "left"
     },
     linkText: {
         color: '#FFF',
